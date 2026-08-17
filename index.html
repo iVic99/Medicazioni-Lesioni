@@ -279,59 +279,160 @@
   }
   .item-card.avoid .item-label{color:var(--danger-ink);}
 
-  /* flowchart verticale del percorso decisionale */
+  /* flowchart del percorso decisionale */
   .flow{
-    position:relative;
-    margin:6px 0 4px;
-    padding-left:2px;
-  }
-  .flow-line{
-    position:absolute;
-    left:21px;
-    top:20px;
-    bottom:20px;
-    width:2px;
-    background:var(--line);
+    display:flex;
+    flex-direction:column;
+    margin:4px 0 4px;
   }
   .flow-step{
     position:relative;
-    display:flex;
-    gap:14px;
-    align-items:flex-start;
-    padding-bottom:20px;
   }
-  .flow-step:last-child{padding-bottom:0;}
-  .flow-node{
-    width:42px;height:42px;
-    border-radius:50%;
+  .flow-box{
+    position:relative;
+    display:flex;
+    gap:13px;
+    align-items:flex-start;
     background:#fff;
-    border:2px solid var(--teal);
+    border:1.5px solid var(--line);
+    border-left:4px solid var(--accent, var(--teal));
+    border-radius:11px;
+    padding:13px 14px 14px;
+  }
+  .flow-num{
+    position:absolute;
+    top:10px; right:12px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    color:var(--ink-soft);
+    letter-spacing:.04em;
+    opacity:.75;
+  }
+  .flow-node{
+    width:38px;height:38px;
+    border-radius:10px;
+    background:var(--paper-2);
+    background:color-mix(in srgb, var(--accent, var(--teal)) 14%, #fff);
+    border:1.5px solid var(--accent, var(--teal));
+    color:var(--accent, var(--teal));
     display:flex;align-items:center;justify-content:center;
     flex:none;
-    z-index:1;
   }
-  .flow-node svg{width:21px;height:21px;}
-  .flow-node.filled{
-    background:var(--teal);
-    border-color:var(--teal);
-  }
-  .flow-node.swatch-node{border-width:3px;}
-  .flow-content{padding-top:6px; flex:1; min-width:0;}
+  .flow-node svg{width:19px;height:19px;}
+  .flow-node.swatch-node{padding:0;}
+  .flow-content{flex:1; min-width:0; padding-top:1px;}
   .flow-cap{
     font-family:'IBM Plex Mono',monospace;
-    font-size:10.5px;
+    font-size:10px;
     letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--ink-soft);
-    margin-bottom:2px;
+    margin-bottom:3px;
   }
   .flow-val{
     font-weight:700;
-    font-size:15px;
+    font-size:15.5px;
     font-family:'Fraunces',serif;
+    line-height:1.25;
   }
-  .flow-step.outcome .flow-cap{color:var(--teal-deep); font-weight:600;}
-  .flow-step.outcome .flow-val{margin-bottom:8px;}
+  .flow-connector{
+    display:flex;
+    justify-content:flex-start;
+    padding-left:18px;
+    height:22px;
+    align-items:center;
+  }
+  .flow-connector svg{width:14px;height:14px; color:var(--line);}
+  .flow-connector.support svg{color:var(--line);}
+
+  /* card di supporto (detersione / secondaria) — meno enfasi dei nodi TIME */
+  .flow-step.support .flow-box{
+    border-left-color:var(--teal);
+    background:var(--paper);
+    box-shadow:none;
+  }
+  .flow-step.support .flow-node{
+    background:#fff;
+  }
+  .flow-step.support .flow-cap{color:var(--teal-deep);}
+
+  /* card esito — molto più prominente */
+  .flow-step.outcome{
+    margin-top:2px;
+  }
+  .flow-step.outcome .flow-box{
+    border:none;
+    background:linear-gradient(155deg, var(--teal-deep), var(--teal) 85%);
+    padding:18px 18px 19px;
+    box-shadow:0 8px 20px -10px rgba(29,67,61,.55);
+  }
+  .flow-step.outcome .flow-node{
+    background:rgba(255,255,255,.16);
+    border:1.5px solid rgba(255,255,255,.5);
+    color:#fff;
+    width:42px;height:42px;
+  }
+  .flow-step.outcome .flow-cap{
+    color:rgba(255,255,255,.8);
+    font-weight:700;
+  }
+  .flow-step.outcome .flow-content .item-grid .item-card{
+    background:rgba(255,255,255,.94);
+    border-color:transparent;
+  }
+  .flow-connector.outcome-connector svg{color:var(--teal);}
+  .flow-connector.outcome-connector{padding-left:18px;}
+
+  /* rami condizionali dell'albero procedurale */
+  .flow-step.branch{
+    margin-left:30px;
+    position:relative;
+  }
+  .flow-step.branch::before{
+    content:'';
+    position:absolute;
+    left:-19px; top:-6px;
+    width:14px; height:26px;
+    border-left:2px dashed var(--line);
+    border-bottom:2px dashed var(--line);
+    border-bottom-left-radius:8px;
+  }
+  .flow-step.branch .flow-box{
+    border-left-style:dashed;
+    background:var(--paper);
+    padding:11px 13px 12px;
+  }
+  .flow-step.branch .flow-node{
+    width:32px;height:32px;
+    border-radius:8px;
+  }
+  .flow-step.branch .flow-node svg{width:16px;height:16px;}
+  .flow-step.branch .flow-cap{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .flow-step.branch .flow-cap::before{
+    content:'RAMO CONDIZIONALE';
+    font-size:9px;
+    background:var(--accent, var(--slough));
+    color:#fff;
+    padding:1.5px 6px;
+    border-radius:4px;
+    letter-spacing:.05em;
+  }
+  .flow-connector.branch-connector{padding-left:48px; height:14px;}
+  .flow-connector.branch-connector svg{width:11px;height:11px;}
+
+  .step-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    font-weight:700;
+    color:var(--accent, var(--teal));
+    letter-spacing:.05em;
+    margin-bottom:2px;
+    display:block;
+  }
 
   /* modulo fotocamera / analisi visiva */
   .cam-block{
@@ -452,16 +553,80 @@
     border-top:1px dashed var(--line);
     padding-top:14px;
   }
+
+  /* blocco visibile SOLO in stampa: medicazione, cambio, materiale */
+  .print-only-block{ display:none; }
   .footer-actions{
     display:flex;
     gap:10px;
     margin-top:20px;
     flex-wrap:wrap;
   }
+  @page{
+    size: A4 landscape;
+    margin: 14mm 16mm;
+  }
   @media print{
-    .nav-row, .footer-actions, .progress, .masthead .tagline{display:none;}
-    body{background:#fff;}
-    .card{border:none;}
+    body{ background:#fff; }
+    .wrap{ max-width:none; padding:0; }
+    .masthead{ padding-bottom:6px; margin-bottom:10px; }
+    .masthead-eyebrow{ font-size:9px; }
+    h1{ font-size:17px; margin:2px 0 0; }
+
+    .card{ border:none; padding:0; }
+
+    /* in stampa mostriamo SOLO il blocco medicazione/cambio/materiale:
+       tutto il resto della card (schema completo, avvisi, riepilogo domande, ecc.) viene nascosto */
+    .card > *:not(.print-only-block){ display:none !important; }
+    .print-only-block{ display:block !important; }
+
+    .pp-head{
+      font-family:'Fraunces',serif;
+      font-weight:700;
+      font-size:21px;
+      border-bottom:2px solid var(--teal);
+      padding-bottom:10px;
+      margin-bottom:18px;
+    }
+    .pp-section{
+      break-inside:avoid;
+      margin-bottom:22px;
+      max-width:640px;
+    }
+    .pp-section h3{
+      font-family:'IBM Plex Mono',monospace;
+      font-size:11px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--teal-deep);
+      margin:0 0 9px;
+    }
+    .pp-freq{
+      font-size:13.5px;
+      line-height:1.6;
+      margin:0;
+      max-width:640px;
+    }
+    .pp-foot{
+      font-size:9.5px;
+      color:var(--ink-soft);
+      border-top:1px dashed var(--line);
+      padding-top:10px;
+      margin-top:6px;
+    }
+    .print-only-block .item-grid{
+      grid-template-columns:repeat(auto-fill, minmax(140px,1fr));
+      gap:9px;
+    }
+    .print-only-block .item-card{
+      padding:10px 12px;
+      gap:8px;
+    }
+    .print-only-block .item-card .icon-box{
+      width:28px; height:28px; border-radius:7px;
+    }
+    .print-only-block .item-card .icon-box svg{ width:16px; height:16px; }
+    .print-only-block .item-card .item-label{ font-size:11.5px; }
   }
 </style>
 </head>
@@ -578,7 +743,10 @@ const ICONS = {
   perilesionaleIcon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/><circle cx="24" cy="24" r="6" fill="currentColor" opacity=".25" stroke="currentColor" stroke-width="1.6"/></svg>`,
   esito: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 25l8 8 16-18" stroke="white" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   fotocamera: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="14" width="36" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M17 14l3-5h8l3 5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="26" r="7" stroke="currentColor" stroke-width="2"/></svg>`,
-  detersione: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 10h9a4 4 0 0 1 4 4v3h5a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M27 21c3 5 4.5 8 4.5 11a7 7 0 1 1-14 0c0-3 1.5-6 4.5-11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`
+  detersione: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 10h9a4 4 0 0 1 4 4v3h5a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M27 21c3 5 4.5 8 4.5 11a7 7 0 1 1-14 0c0-3 1.5-6 4.5-11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  preparazione: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="20" width="32" height="18" rx="3" stroke="currentColor" stroke-width="2"/><path d="M16 20v-4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v4" stroke="currentColor" stroke-width="2"/><path d="M8 28h32" stroke="currentColor" stroke-width="1.3" opacity=".5"/></svg>`,
+  orologio: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="15" stroke="currentColor" stroke-width="2"/><path d="M24 15v9l7 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  ramo: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 11v11a8 8 0 0 0 8 8h6M34 11v11a8 8 0 0 1-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="9" r="3" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="9" r="3" stroke="currentColor" stroke-width="2"/><circle cx="28" cy="33" r="3" fill="currentColor"/></svg>`
 };
 
 function iconFor(text){
@@ -596,6 +764,21 @@ function iconFor(text){
   if(t.includes('fissaggio') || t.includes('bende non adesive') || t.includes('adesiv')) return ICONS.fissaggio;
   if(t.includes('garz') || t.includes('tradizional')) return ICONS.garza;
   return ICONS.generico;
+}
+
+function accentFor(kind, value){
+  if(kind === 'infezione'){
+    if(value === 'assente') return 'var(--teal)';
+    if(value === 'critica') return 'var(--slough)';
+    if(value === 'locale') return 'var(--granulazione)';
+    if(value === 'sistemica') return 'var(--danger-ink)';
+  }
+  if(kind === 'perilesionale'){
+    if(value === 'integra') return 'var(--teal)';
+    if(value === 'macerata') return 'var(--slough)';
+    if(value === 'fragile') return 'var(--granulazione)';
+  }
+  return 'var(--teal)';
 }
 
 let state = {};
@@ -804,8 +987,11 @@ function renderStep(step){
 function computeResult(s){
   const rec = {
     detersione: [],
+    debridement: [],
+    gestioneInfezione: [],
     primaria: [],
     secondaria: [],
+    protezionePerilesionale: [],
     evitare: [],
     frequenza: '',
     causali: [],
@@ -852,7 +1038,7 @@ function computeResult(s){
       rec.warnings.push('Essudato abbondante su tessuto necrotico: rivaluta la necessità di debridement chirurgico/strumentale.');
     }
     rec.evitare.push('Medicazioni secche che aderiscono e non favoriscono l\'autolisi');
-    rec.causali.push('Se necrosi massiva, ischemia critica o infezione sistemica: l\'algoritmo deve spostarsi verso debridement chirurgico/strumentale prima di qualsiasi medicazione avanzata.');
+    rec.debridement.push('Necrosi secca/escara: avviare debridement autolitico (idrogel) o, se necrosi massiva/ischemia critica, valutare debridement chirurgico/strumentale prima di qualsiasi medicazione avanzata.');
   }
   else if(s.tessuto === 'slough'){
     if(s.essudato === 'scarso'){
@@ -862,12 +1048,12 @@ function computeResult(s){
     } else {
       rec.primaria.push('Alginato o idrofibra superassorbente');
     }
-    rec.causali.push('Obiettivo: proseguire il debridement e ridurre la componente fibrinosa.');
+    rec.debridement.push('Tessuto fibrinoso/slough: proseguire il debridement (autolitico o meccanico soft) per ridurre la componente non vitale.');
   }
   else if(s.tessuto === 'misto'){
     rec.primaria.push('Idrogel/idrocolloide come base');
     rec.primaria.push('Foam, alginato o idrofibra se essudato moderato-alto');
-    rec.causali.push('Fondo disomogeneo: continuare il debridement selettivo mentre si protegge l\'area già in granulazione.');
+    rec.debridement.push('Fondo disomogeneo: continuare il debridement selettivo della parte fibrinosa mentre si protegge l\'area già in granulazione.');
   }
   else if(s.tessuto === 'granulazione'){
     if(s.essudato === 'scarso'){
@@ -889,23 +1075,24 @@ function computeResult(s){
   // --- Layer infezione ---
   if(s.infezione === 'critica'){
     rec.primaria.push('Aggiungi componente antimicrobica: argento, iodio (cadexomero), PHMB o miele medicale');
-    rec.warnings.push('Uso limitato nel tempo (cicli di 2–4 settimane) con rivalutazione clinica; sospendere se la ferita migliora o se non si osserva beneficio.');
-    rec.causali.push('Eseguire detersione e debridement del biofilm prima/insieme all\'antimicrobico topico: l\'antimicrobico da solo non è sufficiente.');
+    rec.gestioneInfezione.push('Colonizzazione critica sospetta: eseguire detersione e debridement del biofilm prima/insieme all\'antimicrobico topico — da solo non è sufficiente.');
+    rec.gestioneInfezione.push('Uso limitato nel tempo (cicli di 2–4 settimane) con rivalutazione clinica; sospendere se la ferita migliora o se non si osserva beneficio.');
   } else if(s.infezione === 'locale'){
     rec.primaria.push('Medicazione antimicrobica mirata (argento, iodio, PHMB o miele) associata a debridement');
-    rec.warnings.push('Segno locale conclamato: integrare con detersione/debridement e rivalutazione ravvicinata.');
+    rec.gestioneInfezione.push('Segno locale conclamato: integrare l\'antimicrobico con detersione/debridement e programmare una rivalutazione ravvicinata.');
   } else if(s.infezione === 'sistemica'){
     rec.danger.push('Segni sistemici di infezione: la priorità è la terapia sistemica (valutazione medica) e il debridement appropriato. Le medicazioni avanzate antimicrobiche vanno usate come supporto, mai come unico trattamento.');
+    rec.gestioneInfezione.push('Richiedere valutazione medica urgente per terapia sistemica; la medicazione topica resta di supporto e non sostituisce il trattamento sistemico.');
   }
 
   // --- Layer cute perilesionale ---
   if(s.perilesionale === 'macerata'){
     rec.secondaria.push('Prodotto barriera per la cute perilesionale (pasta o film protettivo)');
-    rec.warnings.push('Cute macerata: preferire presidi più assorbenti (foam, idrofibre, superassorbenti) per allontanare l\'essudato dai bordi.');
+    rec.protezionePerilesionale.push('Cute macerata: preferire presidi più assorbenti (foam, idrofibre, superassorbenti) per allontanare l\'essudato dai bordi e applicare un prodotto barriera prima di richiudere.');
   } else if(s.perilesionale === 'fragile'){
     rec.evitare.push('Adesivi aggressivi standard');
     rec.secondaria.push('Fissaggio con bordo in silicone o bende non adesive');
-    rec.warnings.push('Rischio di skin tear: prediligere medicazioni atraumatiche e rimozione delicata.');
+    rec.protezionePerilesionale.push('Rischio di skin tear: usare medicazioni atraumatiche, fissaggio in silicone e rimuovere sempre con delicatezza, srotolando parallelamente alla cute.');
   }
 
   // --- Layer tipo di ferita (interventi causali) ---
@@ -969,63 +1156,186 @@ function renderResult(){
     return '<ul class="notes">' + arr.map(t=>`<li>${t}</li>`).join('') + '</ul>';
   }
 
-  function buildFlow(){
-    const steps = [
-      { cap:'Obiettivo', val: labelFor('obiettivo', state.obiettivo), icon: ICONS.obiettivo },
-      { cap:'Tipo di lesione', val: labelFor('tipoFerita', state.tipoFerita), icon: ICONS.ferita },
-      { cap:'Tessuto del letto — T', val: labelFor('tessuto', state.tessuto), swatch: tessutoColorMap[state.tessuto] },
-      { cap:'Infezione / infiammazione — I', val: labelFor('infezione', state.infezione), icon: ICONS.infezioneIcon },
-      { cap:'Essudato — M', val: labelFor('essudato', state.essudato), icon: ICONS.essudatoIcon },
-      { cap:'Cute perilesionale — E', val: labelFor('perilesionale', state.perilesionale), icon: ICONS.perilesionaleIcon }
-    ];
+  function buildProcedureFlow(){
+    const CHEVRON = `<svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    let stepNum = 0;
+    const nextNum = () => String(++stepNum).padStart(2,'0');
 
-    let html = '<div class="flow"><div class="flow-line"></div>';
-    steps.forEach(s=>{
-      const nodeStyle = s.swatch ? `style="border-color:${s.swatch}"` : '';
-      const nodeInner = s.swatch ? `<div style="width:16px;height:16px;border-radius:50%;background:${s.swatch}"></div>` : s.icon;
-      html += `
-        <div class="flow-step">
-          <div class="flow-node ${s.swatch?'swatch-node':''}" ${nodeStyle}>${nodeInner}</div>
-          <div class="flow-content">
-            <div class="flow-cap">${s.cap}</div>
-            <div class="flow-val">${s.val}</div>
-          </div>
-        </div>`;
-    });
+    let html = '<div class="flow">';
 
-    // nodo intermedio: detersione e preparazione del campo (derivato, non scelto manualmente)
+    // PASSO — preparazione del materiale (sempre presente)
     html += `
-        <div class="flow-step">
+      <div class="flow-step">
+        <div class="flow-box" style="--accent:var(--teal-deep)">
+          <div class="flow-num">${nextNum()}</div>
+          <div class="flow-node">${ICONS.preparazione}</div>
+          <div class="flow-content">
+            <div class="flow-cap">Preparazione del materiale</div>
+            <div class="flow-val" style="font-size:14px;">Igiene delle mani, guanti puliti (sterili se indicato), materiale pronto e superficie di lavoro pulita.</div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-connector">${CHEVRON}</div>`;
+
+    // PASSO — detersione
+    html += `
+      <div class="flow-step">
+        <div class="flow-box" style="--accent:var(--teal)">
+          <div class="flow-num">${nextNum()}</div>
           <div class="flow-node">${ICONS.detersione}</div>
           <div class="flow-content">
             <div class="flow-cap">Detersione e preparazione del campo</div>
             ${noteList(rec.detersione)}
           </div>
-        </div>`;
+        </div>
+      </div>`;
 
-    // nodo finale: esito / medicazione consigliata
-    html += `
-        <div class="flow-step outcome">
-          <div class="flow-node filled">${ICONS.esito}</div>
+    // RAMO — debridement (condizionale)
+    if(rec.debridement.length){
+      html += `
+      <div class="flow-connector branch-connector">${CHEVRON}</div>
+      <div class="flow-step branch">
+        <div class="flow-box" style="--accent:var(--slough)">
+          <div class="flow-node">${ICONS.ramo}</div>
           <div class="flow-content">
-            <div class="flow-cap">Esito — medicazione primaria consigliata</div>
+            <div class="flow-cap">Debridement del tessuto non vitale</div>
+            ${noteList(rec.debridement)}
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // RAMO — gestione infezione (condizionale)
+    if(rec.gestioneInfezione.length){
+      html += `
+      <div class="flow-connector branch-connector">${CHEVRON}</div>
+      <div class="flow-step branch">
+        <div class="flow-box" style="--accent:${accentFor('infezione', state.infezione)}">
+          <div class="flow-node">${ICONS.infezioneIcon}</div>
+          <div class="flow-content">
+            <div class="flow-cap">Gestione dell'infezione</div>
+            ${noteList(rec.gestioneInfezione)}
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // PASSO — applicazione medicazione primaria (l'esito centrale)
+    html += `
+      <div class="flow-connector outcome-connector">${CHEVRON}</div>
+      <div class="flow-step outcome">
+        <div class="flow-box">
+          <div class="flow-node">${ICONS.esito}</div>
+          <div class="flow-content">
+            <span class="step-tag" style="color:rgba(255,255,255,.85)">PASSO ${nextNum()}</span>
+            <div class="flow-cap">Applicazione della medicazione primaria</div>
             ${pillList(rec.primaria)}
           </div>
-        </div>`;
+        </div>
+      </div>`;
 
+    // PASSO — medicazione secondaria / fissaggio (condizionale ma trattato come passo principale)
     if(rec.secondaria.length){
       html += `
-        <div class="flow-step">
+      <div class="flow-connector">${CHEVRON}</div>
+      <div class="flow-step">
+        <div class="flow-box" style="--accent:var(--teal)">
+          <div class="flow-num">${nextNum()}</div>
           <div class="flow-node">${ICONS.fissaggio}</div>
           <div class="flow-content">
-            <div class="flow-cap">Medicazione secondaria / accessori</div>
+            <div class="flow-cap">Medicazione secondaria e fissaggio</div>
             ${pillList(rec.secondaria)}
           </div>
-        </div>`;
+        </div>
+      </div>`;
+    }
+
+    // RAMO — protezione cute perilesionale (condizionale)
+    if(rec.protezionePerilesionale.length){
+      html += `
+      <div class="flow-connector branch-connector">${CHEVRON}</div>
+      <div class="flow-step branch">
+        <div class="flow-box" style="--accent:${accentFor('perilesionale', state.perilesionale)}">
+          <div class="flow-node">${ICONS.perilesionaleIcon}</div>
+          <div class="flow-content">
+            <div class="flow-cap">Protezione della cute perilesionale</div>
+            ${noteList(rec.protezionePerilesionale)}
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // PASSO — frequenza cambio e rivalutazione
+    html += `
+      <div class="flow-connector">${CHEVRON}</div>
+      <div class="flow-step">
+        <div class="flow-box" style="--accent:var(--teal-deep)">
+          <div class="flow-num">${nextNum()}</div>
+          <div class="flow-node">${ICONS.orologio}</div>
+          <div class="flow-content">
+            <div class="flow-cap">Frequenza del cambio e rivalutazione</div>
+            <div class="flow-val" style="font-size:13.5px; font-family:'Inter',sans-serif; font-weight:400; line-height:1.5;">${rec.frequenza}</div>
+          </div>
+        </div>
+      </div>`;
+
+    // RAMO — considerazioni palliative (condizionale)
+    if(rec.palliative.length){
+      html += `
+      <div class="flow-connector branch-connector">${CHEVRON}</div>
+      <div class="flow-step branch">
+        <div class="flow-box" style="--accent:var(--riepitelizzazione)">
+          <div class="flow-node">${ICONS.ramo}</div>
+          <div class="flow-content">
+            <div class="flow-cap">Considerazioni palliative</div>
+            ${noteList(rec.palliative)}
+          </div>
+        </div>
+      </div>`;
     }
 
     html += '</div>';
     return html;
+  }
+
+  function buildMiniSummary(){
+    return `<div class="summary-strip">
+        <span>OBIETTIVO: ${labelFor('obiettivo', state.obiettivo)}</span>
+        <span>TIPO: ${labelFor('tipoFerita', state.tipoFerita)}</span>
+        <span>TESSUTO: ${labelFor('tessuto', state.tessuto)}</span>
+        <span>INFEZIONE: ${labelFor('infezione', state.infezione)}</span>
+        <span>ESSUDATO: ${labelFor('essudato', state.essudato)}</span>
+        <span>PERILESIONALE: ${labelFor('perilesionale', state.perilesionale)}</span>
+      </div>`;
+  }
+
+  function buildPrintOnly(){
+    // materiale occorrente: base sempre necessaria + medicazione primaria + secondaria, senza duplicati
+    const base = ['Guanti monouso', 'Garze sterili', 'Soluzione fisiologica o acqua potabile corrente'];
+    const materiale = [...new Set([...base, ...rec.primaria, ...rec.secondaria])];
+
+    return `
+    <div class="print-only-block">
+      <div class="pp-head">Scheda medicazione — ${TESSUTO_LABELS[state.tessuto] || labelFor('tessuto', state.tessuto)}</div>
+
+      <div class="pp-section">
+        <h3>Medicazione da utilizzare</h3>
+        ${pillList(rec.primaria)}
+        ${rec.secondaria.length ? `<div style="margin-top:8px; font-size:11px; color:var(--ink-soft); font-weight:600;">+ secondaria / fissaggio</div>${pillList(rec.secondaria)}` : ''}
+      </div>
+
+      <div class="pp-section">
+        <h3>Frequenza del cambio</h3>
+        <p class="pp-freq">${rec.frequenza}</p>
+      </div>
+
+      <div class="pp-section">
+        <h3>Materiale occorrente</h3>
+        ${pillList(materiale)}
+      </div>
+
+      <div class="pp-foot">Stima di supporto alla decisione clinica: richiede conferma dell'operatore prima dell'applicazione.</div>
+    </div>`;
   }
 
   area.innerHTML = `
@@ -1039,8 +1349,8 @@ function renderResult(){
       ${rec.danger.length ? `<div class="danger-box">⚠ ${rec.danger.join('<br><br>')}</div>` : ''}
 
       <div class="section-block">
-        <h3>Il tuo percorso decisionale</h3>
-        ${buildFlow()}
+        <h3>Schema di applicazione della medicazione</h3>
+        ${buildProcedureFlow()}
       </div>
 
       <div class="section-block">
@@ -1048,27 +1358,23 @@ function renderResult(){
         ${pillList(rec.evitare, 'avoid')}
       </div>
 
-      ${rec.palliative.length ? `
-      <div class="section-block">
-        <h3>Considerazioni palliative</h3>
-        ${noteList(rec.palliative)}
-      </div>` : ''}
-
       <div class="section-block">
         <h3>Interventi causali da non dimenticare</h3>
         ${noteList(rec.causali)}
       </div>
 
-      <div class="section-block">
-        <h3>Frequenza indicativa del cambio</h3>
-        <p style="font-size:14.5px; line-height:1.55; margin:0;">${rec.frequenza}</p>
-      </div>
-
       ${rec.warnings.length ? `<div class="warn-box">${rec.warnings.join('<br><br>')}</div>` : ''}
+
+      <div class="section-block">
+        <h3>Le tue risposte (mini riepilogo)</h3>
+        ${buildMiniSummary()}
+      </div>
 
       <div class="disclaimer">
         Questo percorso applica in modo strutturato il modello T.I.M.E. e i criteri di scelta descritti nel documento caricato. Non sostituisce la valutazione clinica diretta, il giudizio del medico/infermiere responsabile né i protocolli aziendali in vigore. In presenza di segni sistemici di infezione, dolore improvviso, sanguinamento o rapido peggioramento, richiedere sempre una rivalutazione medica.
       </div>
+
+      ${buildPrintOnly()}
 
       <div class="footer-actions">
         <button class="nav-btn" id="restartBtn" type="button">↺ Ricomincia</button>
